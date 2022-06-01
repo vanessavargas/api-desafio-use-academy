@@ -1,0 +1,25 @@
+{
+  "name": "api-desafio-use-academy",
+  "version": "1.0.0",
+  "description": "API desenvolvida como Desafio Final Bootcamp Use Academy",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --inspect --ignore-watch node_modules src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VanessaVargas/api-desafio-use-academy.git"
+  },
+  "author": "Vanessa Vargas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VanessaVargas/api-desafio-use-academy/issues"
+  },
+  "homepage": "https://github.com/VanessaVargas/api-desafio-use-academy#readme",
+  "devDependencies": {
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "ts-node-dev": "^2.0.0"
+  }
+}
