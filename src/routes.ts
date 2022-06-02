@@ -4,6 +4,9 @@ import { CategoryController } from './controllers/category.controller';
 import { CategoryService } from './services/category.service';
 import { ProductController } from './controllers/product.controller';
 import { ProductService } from './services/product.service';
+import { CreateCategoryDto } from './dtos/category/create-category.dto';
+import { CreateProductDto } from './dtos/product/create-product.dto';
+import { validator } from './middlewares';
 
 const routes = Router();
 
@@ -30,6 +33,8 @@ routes.get(
 
 routes.post(
   '/categories',
+  CreateCategoryDto.validators(),
+  validator,
   (request: Request, response: Response, next: NextFunction) => {
     categoryController.create(request, response).catch((error: Error) => {
       next(error);
@@ -49,6 +54,8 @@ routes.get(
 
 routes.post(
   '/products',
+  CreateProductDto.validators(),
+  validator,
   (request: Request, response: Response, next: NextFunction) => {
     productController.create(request, response).catch((error: Error) => {
       next(error);
