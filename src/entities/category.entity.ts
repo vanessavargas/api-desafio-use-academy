@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductEntity } from './product.entity';
 
 @Entity({ name: 'categories' })
 export class CategoryEntity {
@@ -7,4 +8,7 @@ export class CategoryEntity {
 
   @Column({ type: 'varchar', nullable: false })
   name!: string;
+
+  @OneToMany(() => ProductEntity, (product) => product.category)
+  products?: ProductEntity[];
 }

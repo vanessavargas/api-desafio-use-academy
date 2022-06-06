@@ -1,6 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { CategoryEntity } from './category.entity';
 
-@Entity({ name: 'products' })
+@Entity({ name: 'product' })
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
@@ -11,18 +19,22 @@ export class ProductEntity {
   @Column({ type: 'varchar', nullable: false })
   description!: string;
 
-  @Column({ type: 'integer', nullable: false })
+  @Column({ type: 'float', nullable: false })
   value!: number;
 
-  @Column({ type: 'integer', nullable: false })
+  @Column({ type: 'int', nullable: false })
   person_count!: number;
-
-  @Column({ type: 'integer', nullable: false })
-  disponibility!: number;
 
   @Column({ type: 'varchar', nullable: false })
   image!: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  category_id!: string;
+  @Column({ type: 'boolean', nullable: false })
+  disponibility!: boolean;
+
+  @ManyToOne(() => CategoryEntity, (category) => category.products, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
+  category!: CategoryEntity;
 }
