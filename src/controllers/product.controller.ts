@@ -1,5 +1,6 @@
 import { ProductService } from '../services/product.service';
 import { Request, Response } from 'express';
+import { resolve } from 'path';
 import { HttpStatus } from '../utils/enums/http-status.enum';
 import { CreatedProductDto } from '../dtos/product/created-product.dto';
 import { CreateProductDto } from '../dtos/product/create-product.dto';
@@ -11,17 +12,19 @@ interface CreateProductBody extends Request {
 interface UpdateProductBody extends Request {
   body: Partial<UpdateProductDto>;
 }
+
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
   async create(
-    { body, file }: CreateProductBody,
-    response: Response,
+    { body, file }: Request,
+    resquest: Response,
   ): Promise<Response<CreatedProductDto>> {
-    const product = await this.productService.create({
+    const createdProduct = await this.productService.create({
       ...body,
-      image: file!.filename,
+      image: file?.filename,
+      disponibility: body.disponibility === 'true' ? true : false,
     });
-    return response.status(HttpStatus.CREATED).json(product);
+    return resquest.status(HttpStatus.CREATED).json(createdProduct);
   }
 
   async getAll(
@@ -32,6 +35,13 @@ export class ProductController {
     return response.status(HttpStatus.OK).json(products);
   }
 
+  async getImgByName({ params }: Request, response: Response): Promise<any> {
+    const directory = resolve(__dirname, '..', 'uploads');
+    return response
+      .status(HttpStatus.OK)
+      .sendFile(`${directory}/${params.name}`);
+  }
+
   async show(
     { params }: Request,
     response: Response,
@@ -40,14 +50,13 @@ export class ProductController {
     return response.status(HttpStatus.OK).json(product);
   }
 
-  async update(
-    { body, file, params }: UpdateProductBody,
-    response: Response,
-  ): Promise<Response<void>> {
-    await this.productService.update(params.id, {
-      ...body,
-      image: file?.filename,
-    });
-    return response.status(HttpStatus.NO_CONTENT).json();
+  async update({ params, body }: Request, response: Response) {
+    const product = await this.productService.update(params.id, body);
+    return response.status(HttpStatus.NO_CONTENT).json(product);
+  }
+
+  async delete({ params }: Request, response: Response) {
+    const product = await this.productService.delete(params.id);
+    return response.status(HttpStatus.NO_CONTENT).json(product);
   }
 }
