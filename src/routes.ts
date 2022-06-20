@@ -107,6 +107,15 @@ routes.get(
   },
 );
 
+routes.get(
+  'products/img/:name',
+  (request: Request, response: Response, next: NextFunction) => {
+    productController.getImgByName(request, response).catch((error: Error) => {
+      next(error);
+    });
+  },
+);
+
 routes.put(
   '/products/:id',
   multer(multerConfig).single('image'),

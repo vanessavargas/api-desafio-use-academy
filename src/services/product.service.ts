@@ -124,4 +124,16 @@ export class ProductService {
       );
     }
   }
+
+  async delete(id: string) {
+    try {
+      const products = await this.productRepository.delete(id);
+      return products;
+    } catch (error) {
+      throw new HttpException(
+        'Houve um erro ao deletar o produto!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }
