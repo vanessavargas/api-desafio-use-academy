@@ -25,17 +25,6 @@ export class CategoryService {
     }
   }
 
-  async show(id: string): Promise<CreatedCategoryDto> {
-    const category = await this.categoryRepository.findOne({ where: { id } });
-    if (!category) {
-      throw new HttpException(
-        'Categoria não encontrada!',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    return new CreatedCategoryDto({ id: category.id, name: category.name });
-  }
-
   async create({ name }: CreateCategoryDto): Promise<CreatedCategoryDto> {
     try {
       const createCategory = this.categoryRepository.create({ name });
