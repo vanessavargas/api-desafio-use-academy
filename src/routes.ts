@@ -47,15 +47,6 @@ routes.post(
   },
 );
 
-routes.get(
-  '/categories/:id',
-  (request: Request, response: Response, next: NextFunction) => {
-    categoryController.show(request, response).catch((error: Error) => {
-      next(error);
-    });
-  },
-);
-
 routes.put(
   '/categories/:id',
   UpdateCategoryDto.validators(),

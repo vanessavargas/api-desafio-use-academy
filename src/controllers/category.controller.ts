@@ -27,11 +27,6 @@ export class CategoryController {
     return response.status(HttpStatus.OK).json(categories);
   }
 
-  async show({ params }: Request, response: Response) {
-    const category = this.categoryService.show(params.id);
-    return response.status(HttpStatus.OK).json(category);
-  }
-
   async update(
     { body: category, params }: UpdateCategoryBody,
     response: Response,
