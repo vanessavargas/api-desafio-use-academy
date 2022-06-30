@@ -3,12 +3,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 
-@Entity({ name: 'product' })
+@Entity({ name: 'products' })
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
@@ -22,7 +23,7 @@ export class ProductEntity {
   @Column({ type: 'float', nullable: false })
   value!: number;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'float', nullable: false })
   person_count!: number;
 
   @Column({ type: 'varchar', nullable: false })
@@ -37,4 +38,10 @@ export class ProductEntity {
   })
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
   category!: CategoryEntity;
+
+  @CreateDateColumn()
+  created_at?: Date;
+
+  @UpdateDateColumn()
+  updated_at?: Date;
 }

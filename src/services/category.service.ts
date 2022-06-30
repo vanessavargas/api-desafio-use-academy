@@ -1,7 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
 import { CreateCategoryDto } from '../dtos/category/create-category.dto';
 import { CreatedCategoryDto } from '../dtos/category/created-category.dto';
-import { UpdateCategoryDto } from '../dtos/category/update-category.dto';
 import { CategoryEntity } from '../entities/category.entity';
 import { HttpException } from '../handler-exceptions/http-exception.provider';
 import { HttpStatus } from '../utils/enums/http-status.enum';
@@ -33,32 +32,6 @@ export class CategoryService {
     } catch (error) {
       throw new HttpException(
         'Houve um erro ao adicionar categoria!',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async update(
-    id: string,
-    { name }: Partial<UpdateCategoryDto>,
-  ): Promise<void> {
-    const oldCategory = await this.categoryRepository.findOne({
-      where: { id },
-    });
-    if (!oldCategory) {
-      throw new HttpException(
-        'Categoria não encontrado!',
-        HttpStatus.NOT_FOUND,
-      );
-    }
-    try {
-      const updateCategory = this.categoryRepository.merge(oldCategory, {
-        name,
-      });
-      await this.categoryRepository.save(updateCategory);
-    } catch (error) {
-      throw new HttpException(
-        'Houve um erro ao atualizar categoria!',
         HttpStatus.BAD_REQUEST,
       );
     }

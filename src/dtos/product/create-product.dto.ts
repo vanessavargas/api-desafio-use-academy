@@ -44,7 +44,6 @@ export class CreateProductDto extends RequestDto {
       body('disponibility', 'O campo disponibility é obrigatório!').notEmpty(),
       body('categoryId', 'O campo categoryId é obrigatório!').notEmpty(),
       body('categoryId', 'O campo categoryId deve ser uma string!').isString(),
-      body('categoryId', 'O campo categoryId é obrigatório!').notEmpty(),
       body('categoryId', 'O campo categoryId deve ser um UUID!').isUUID(),
     ];
   }

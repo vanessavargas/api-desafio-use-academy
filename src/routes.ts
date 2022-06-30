@@ -5,7 +5,6 @@ import { multerConfig } from './config/multer';
 import { CategoryController } from './controllers/category.controller';
 import { ProductController } from './controllers/product.controller';
 import { CreateCategoryDto } from './dtos/category/create-category.dto';
-import { UpdateCategoryDto } from './dtos/category/update-category.dto';
 import { CreateProductDto } from './dtos/product/create-product.dto';
 import { UpdateProductDto } from './dtos/product/update-product.dto';
 import { validator } from './middlewares';
@@ -23,10 +22,9 @@ const productController = new ProductController(
 );
 
 routes.get('/', (_request: Request, response: Response) => {
-  return response.json({ status: 'sucesso', version: '1.0.0' }).status(200);
+  return response.json({ status: 'success', version: '1.0.0' }).status(200);
 });
 
-//routes Categories
 routes.get(
   '/categories',
   (request: Request, response: Response, next: NextFunction) => {
@@ -47,17 +45,6 @@ routes.post(
   },
 );
 
-routes.put(
-  '/categories/:id',
-  UpdateCategoryDto.validators(),
-  validator,
-  (request: Request, response: Response, next: NextFunction) => {
-    categoryController.update(request, response).catch((error: Error) => {
-      next(error);
-    });
-  },
-);
-
 routes.delete(
   '/categories/:id',
   (request: Request, response: Response, next: NextFunction) => {
@@ -67,7 +54,6 @@ routes.delete(
   },
 );
 
-//routes Products
 routes.post(
   '/products',
   multer(multerConfig).single('image'),
@@ -98,15 +84,6 @@ routes.get(
   },
 );
 
-routes.get(
-  'products/img/:name',
-  (request: Request, response: Response, next: NextFunction) => {
-    productController.getImgByName(request, response).catch((error: Error) => {
-      next(error);
-    });
-  },
-);
-
 routes.put(
   '/products/:id',
   multer(multerConfig).single('image'),
@@ -114,6 +91,15 @@ routes.put(
   validator,
   (request: Request, response: Response, next: NextFunction) => {
     productController.update(request, response).catch((error: Error) => {
+      next(error);
+    });
+  },
+);
+
+routes.delete(
+  '/products/:id',
+  (request: Request, response: Response, next: NextFunction) => {
+    productController.delete(request, response).catch((error: Error) => {
       next(error);
     });
   },
