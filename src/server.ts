@@ -1,26 +1,16 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { routes } from './routes';
 import { env } from './config/environment-variables';
 import { AppDataSource } from './config/data-source';
+import { errorHandler } from './middlewares';
 import { resolve } from 'path';
-import cors from 'cors';
-import fs from 'fs';
-
-const directory = resolve(__dirname, '..', 'dist', 'uploads');
-fs.rmSync(directory, { force: true });
-fs.mkdirSync(directory);
 
 const PORT = env.PORT || 3000;
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  }),
-);
-
 app.use(routes);
+app.use(errorHandler);
+app.use('/files', express.static(resolve(__dirname, '..', 'uploads')));
 
 AppDataSource.initialize()
   .then(() => {

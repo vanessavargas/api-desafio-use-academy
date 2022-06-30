@@ -12,9 +12,6 @@ export class UpdateProductDto extends CreateProductDto {
         .optional()
         .isString(),
       body('value', 'O campo value deve ser um número!').optional().isNumeric(),
-      body('person_count', 'O campo person_count deve ser um número!')
-        .optional()
-        .isNumeric(),
       body('disponibility', 'O campo disponibility deve ser um booleano!')
         .optional()
         .isBoolean(),

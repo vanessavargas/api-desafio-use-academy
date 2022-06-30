@@ -3,6 +3,8 @@ import { CreateProductDto } from './create-product.dto';
 
 export class CreatedProductDto extends CreateProductDto {
   id!: string;
+  created_at?: Date;
+  updated_at?: Date;
 
   constructor({
     name,
@@ -13,6 +15,8 @@ export class CreatedProductDto extends CreateProductDto {
     image,
     id,
     category,
+    created_at,
+    updated_at,
   }: ProductEntity) {
     super();
     this.id = id;
@@ -26,5 +30,7 @@ export class CreatedProductDto extends CreateProductDto {
         : false;
     this.image = image;
     this.categoryId = category.id;
+    this.created_at = created_at;
+    this.updated_at = updated_at;
   }
 }

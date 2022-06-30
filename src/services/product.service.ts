@@ -37,7 +37,7 @@ export class ProductService {
       return new CreatedProductDto(saveProduct);
     } catch (error) {
       throw new HttpException(
-        'Houve um erro ao cadastrar o produto!',
+        'Houve um erro ao cadastrar produto!',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -73,7 +73,7 @@ export class ProductService {
       return new CreatedProductDto(product);
     } catch (error) {
       throw new HttpException(
-        'Houve um erro ao recuperar produto!',
+        'Houve um erro ao recuperar o produto!',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -119,19 +119,18 @@ export class ProductService {
       await this.productRepository.save(updateProduct);
     } catch (error) {
       throw new HttpException(
-        'Houve um erro ao atualizar produto!',
+        'Houve um erro ao atulizar produto!',
         HttpStatus.BAD_REQUEST,
       );
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<void> {
     try {
-      const products = await this.productRepository.delete(id);
-      return products;
+      await this.productRepository.delete(id);
     } catch (error) {
       throw new HttpException(
-        'Houve um erro ao deletar o produto!',
+        'Houve um erro ao deletar produto!',
         HttpStatus.BAD_REQUEST,
       );
     }

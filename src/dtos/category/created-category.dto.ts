@@ -3,8 +3,8 @@ import { CreateCategoryDto } from './create-category.dto';
 
 export class CreatedCategoryDto extends CreateCategoryDto {
   id!: string;
-  created_at!: Date;
-  updated_at!: Date;
+  created_at?: Date;
+  updated_at?: Date;
 
   constructor({ id, name, created_at, updated_at }: CategoryEntity) {
     super();
